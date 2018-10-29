@@ -1,23 +1,26 @@
 {
 
-    "I_extDC_PN" : 2,
-    "I_extDC_LN" : 2,
+    "I_extDC_PN" : 1,
+    "I_extDC_LN" : 0.5,
+    
     "gsyn_PNLN" : 0.05, 
-    "gsyn_LNPN_fast" : 0.4,   
-    "gsyn_LNLN_fast" : 0.3,
+    "gsyn_LNPN_fast" : 0.3,   
+    "gsyn_LNLN_fast" : 0.1,
     "gsyn_LNPN_slow" : 0.015,
     
+     "dF_nACH" : 0.025, 
+    "dF_fGABA" : 0.15,   
+    "dF_sGABA" : 0.005,
     
     "gsyn_PNLN_paper" : 0.35,
     "gsyn_LNPN_fast_paper" : 0.8,
     "gsyn_LNLN_fast_paper" : 0.4,
     "gsyn_LNPN_slow_paper" : 0.015,
-
-    "avcurrent_PN" : 9,
-    "avcurrent_LN" : 5,
-    "spreadcurrent_PN" :7,
-    "spreadcurrent_LN" : 7,
+    
+    "peakcurrent_PN" : 7.5,
+    "peakcurrent_LN" : 4.0,
     "pulse_width" : 2000,
+    "start_pulse" : 500,
     "number_excited_PN" : 90,
     "number_excited_LN" : 30,
     

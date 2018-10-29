@@ -29,8 +29,26 @@ class S_nACH: public Synapse {
  public:
   void ode_set(state_type& variables, state_type& dxdt, const double t, unsigned index) {
     
+     /*unsigned F_index = engine::synapse_index(index, "F");
+    double F = variables[F_index];
+
+    unsigned F_i_index = engine::synapse_index(index, "F_i");
+    double F_i = variables[F_i_index];
+
+    unsigned t_i_index = engine::synapse_index(index, "t_i");
+    double t_i = variables[t_i_index];*/
+
+    /*double F = engine::synapse_value(index, "F");
+    double F_i = engine::synapse_value(index, "F_i");
+    double t_i = engine::synapse_value(index, "t_i");*/
+    double F = 1; 
+    double F_i = 1;
+    double t_i = 0;
+
     unsigned g1_index = engine::synapse_index(index, "g1");
     double g1 = variables[g1_index];
+    unsigned gsyn_index = engine::synapse_index(index, "gsyn");
+    double gsyn = variables[gsyn_index];
 
     //unsigned post_neuron_index = engine::synapse_value(index, "post");
     unsigned pre_neuron_index = engine::synapse_value(index, "pre");
@@ -41,6 +59,24 @@ class S_nACH: public Synapse {
     double beta = 0.2;
     double A = 0.5;
     double t_max = 0.3;
+
+    double tau = 10;
+    double dF = 0.025;
+
+    //Facilitation 
+    if (t == t_0) 
+    {
+    //double F_i = F;
+    //double t_i = t;
+    engine::synapse_value(index, "F_i", F);
+    engine::synapse_value(index, "t_i", t);
+    }
+    
+    F = 1 + (F_i + dF -1)*exp(-(t-t_i)/tau);
+    gsyn *= F; 
+
+    engine::synapse_value(index, "gsyn", gsyn); //update gsyn
+
 
     // Variables (T)
     double h1;
@@ -59,11 +95,13 @@ class S_nACH: public Synapse {
     	h2 = 1;
     }
 
+
+
     double T = A * h1 * h2;  
 
     // ODE set
     dxdt[g1_index] = (alpha * T * (1.0 - g1) - beta * g1); 
-    engine::synapse_value(index, "g1", g1);
+    engine::neuron_value(index, "g1", g1);
 
   } // function ode_set
     

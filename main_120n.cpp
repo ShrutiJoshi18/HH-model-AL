@@ -20,7 +20,9 @@ using namespace std;
 int main(int argc, char **argv) {
   // Commands to keep track of particular variables
   configuration::initialize(argc, argv);
-  configuration::observe("v");      
+  configuration::observe("v");  
+  //configuration::observe_synapse(45,"gsyn");
+  //configuration::observe_synapse(3100,"gsyn_slow"); 
   
   // Generate 90 PN neuron
   engine::generate_neuron<PN>(90);
@@ -29,13 +31,13 @@ int main(int argc, char **argv) {
   engine::generate_neuron<LN>(30);
 
   // Generate 1 S_nACH synapse between our neurons
-  engine::generate_synapse<S_nACH>(1326);
+  engine::generate_synapse<S_nACH>(1334);
 
   // Generate 1 S_2GABAA synapse between our neurons
-  engine::generate_synapse<S_2GABAA>(1808);
+  engine::generate_synapse<S_2GABAA>(1760);
   
   // Generate 1 S_slowGABA synapse between our neurons
-  engine::generate_synapse<S_slowGABA>(1356);
+  engine::generate_synapse<S_slowGABA>(1330);
  
   typedef numeric::odeint::runge_kutta4<
                       state_type , double ,
