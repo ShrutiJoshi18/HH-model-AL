@@ -31,13 +31,13 @@ int main(int argc, char **argv) {
   engine::generate_neuron<LN>(30);
 
   // Generate 1 S_nACH synapse between our neurons
-  engine::generate_synapse<S_nACH>(1334);
+  engine::generate_synapse<S_nACH>(1355);
 
   // Generate 1 S_2GABAA synapse between our neurons
-  engine::generate_synapse<S_2GABAA>(1760);
+  engine::generate_synapse<S_2GABAA>(1757);
   
   // Generate 1 S_slowGABA synapse between our neurons
-  engine::generate_synapse<S_slowGABA>(1330);
+  engine::generate_synapse<S_slowGABA>(1332);
  
   typedef numeric::odeint::runge_kutta4<
                       state_type , double ,
