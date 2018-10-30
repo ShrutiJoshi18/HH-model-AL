@@ -29,26 +29,20 @@ class S_nACH: public Synapse {
  public:
   void ode_set(state_type& variables, state_type& dxdt, const double t, unsigned index) {
     
-     /*unsigned F_index = engine::synapse_index(index, "F");
-    double F = variables[F_index];
+    
 
-    unsigned F_i_index = engine::synapse_index(index, "F_i");
-    double F_i = variables[F_i_index];
-
-    unsigned t_i_index = engine::synapse_index(index, "t_i");
-    double t_i = variables[t_i_index];*/
-
-    /*double F = engine::synapse_value(index, "F");
-    double F_i = engine::synapse_value(index, "F_i");
-    double t_i = engine::synapse_value(index, "t_i");*/
     double F = 1; 
     double F_i = 1;
     double t_i = 0;
 
     unsigned g1_index = engine::synapse_index(index, "g1");
     double g1 = variables[g1_index];
-    unsigned gsyn_index = engine::synapse_index(index, "gsyn");
-    double gsyn = variables[gsyn_index];
+
+    double gsyn = engine::synapse_value(index, "gsyn");
+
+
+    /*unsigned gsyn_index = engine::synapse_index(index, "gsyn");
+    double gsyn = variables[gsyn_index];*/
 
     //unsigned post_neuron_index = engine::synapse_value(index, "post");
     unsigned pre_neuron_index = engine::synapse_value(index, "pre");
@@ -94,7 +88,6 @@ class S_nACH: public Synapse {
     else {
     	h2 = 1;
     }
-
 
 
     double T = A * h1 * h2;  

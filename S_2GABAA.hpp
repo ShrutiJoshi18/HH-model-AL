@@ -33,18 +33,6 @@ class S_2GABAA: public Synapse {
  public:
   void ode_set(state_type& variables, state_type& dxdt, const double t, unsigned index) {
     
-    /* unsigned F_index = engine::synapse_index(index, "F");
-    double F = variables[F_index];
-
-    unsigned F_i_index = engine::synapse_index(index, "F_i");
-    double F_i = variables[F_i_index];
-
-    unsigned t_i_index = engine::synapse_index(index, "t_i");
-    double t_i = variables[t_i_index];*/
-
-   /* double F = engine::synapse_value(index, "F");
-    double F_i = engine::synapse_value(index, "F_i");
-    double t_i = engine::synapse_value(index, "t_i");*/
 
     double F = 1; 
     double F_i = 1;
@@ -55,13 +43,16 @@ class S_2GABAA: public Synapse {
     double v_index = engine::neuron_index(pre_neuron_index,"v"); //obtain the voltage of the pre-neuron
     
 
-    unsigned gsyn_index = engine::synapse_index(index, "gsyn");
-    double gsyn = variables[gsyn_index];
+    /*unsigned gsyn_index = engine::synapse_index(index, "gsyn");
+    double gsyn = variables[gsyn_index];*/
 
-   
+    double gsyn = engine::synapse_value(index, "gsyn");
+    
     double g1 = variables[g1_index];
     double v = variables[v_index];
+   
     double t_0 = engine::neuron_value(pre_neuron_index, "last_spike");
+
     //Constants
     double Alpha = 10.0;
     double Beta = 0.2;

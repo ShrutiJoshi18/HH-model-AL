@@ -11,19 +11,7 @@ class S_slowGABA: public Synapse {
  public:
   void ode_set(state_type& variables, state_type& dxdt, const double t, unsigned index) {
     
-   /* unsigned F_slow_index = engine::synapse_index(index, "F_slow");
-    double F_slow = variables[F_slow_index];
-
-    unsigned F_i_slow_index = engine::synapse_index(index, "F_i_slow");
-    double F_i_slow = variables[F_i_slow_index];
-
-    unsigned t_i_slow_index = engine::synapse_index(index, "t_i_slow");
-    double t_i_slow = variables[t_i_slow_index];*/
-    /*
-    double F_slow = engine::synapse_value(index, "F_slow");
-    double F_i_slow= engine::synapse_value(index, "F_i_slow");
-    double t_i_slow = engine::synapse_value(index, "t_i_slow");*/
-
+   
     double F_slow = 1; 
     double F_i_slow = 1;
     double t_i_slow = 0;
@@ -35,8 +23,10 @@ class S_slowGABA: public Synapse {
     
     
 
-    unsigned gsyn_slow_index = engine::synapse_index(index, "gsyn_slow"); //initial values for gsyn from ssets.
-    double gsyn_slow = variables[gsyn_slow_index];
+    /*unsigned gsyn_slow_index = engine::synapse_index(index, "gsyn_slow"); //initial values for gsyn from ssets.
+    double gsyn_slow = variables[gsyn_slow_index];*/
+
+    double gsyn_slow = engine::synapse_value(index, "gsyn_slow");
 
     double g2 = variables[g2_index];
     double g3 = variables[g3_index];
