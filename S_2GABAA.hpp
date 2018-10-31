@@ -34,9 +34,7 @@ class S_2GABAA: public Synapse {
   void ode_set(state_type& variables, state_type& dxdt, const double t, unsigned index) {
     
 
-    double F = 1; 
-    double F_i = 1;
-    double t_i = 0;//check once, probably wrong
+    
 
     unsigned g1_index = engine::synapse_index(index, "g1"); // obtain initial value for g1 from ssets.
     unsigned pre_neuron_index = engine::synapse_value(index, "pre"); //obtain pre-neuron index from ssets.
@@ -46,32 +44,35 @@ class S_2GABAA: public Synapse {
     /*unsigned gsyn_index = engine::synapse_index(index, "gsyn");
     double gsyn = variables[gsyn_index];*/
 
-    double gsyn = engine::synapse_value(index, "gsyn");
+   // double gsyn = engine::synapse_value(index, "gsyn");
     
     double g1 = variables[g1_index];
     double v = variables[v_index];
    
-    double t_0 = engine::neuron_value(pre_neuron_index, "last_spike");
+   // double t_0 = engine::neuron_value(pre_neuron_index, "last_spike");
 
     //Constants
     double Alpha = 10.0;
     double Beta = 0.2;
     double vthresh = -20.0;
     double sig  = 1.5;
-    double tau = 10;
-    double dF = 0.15;
+    //double tau = 10;
+    //double dF = 0.15;
 
-    //Facilitation 
+    /*//Facilitation 
     if (t == t_0) 
     {
-    engine::synapse_value(index, "F_i", F);
-    engine::synapse_value(index, "t_i", t);
+
+        F_i = F;
+        t_i = t;
+   // engine::synapse_value(index, "F_i", F);
+   // engine::synapse_value(index, "t_i", t);
     }
     
     F = 1 + (F_i + dF -1)*exp(-(t-t_i)/tau);
     gsyn *= F; 
 
-    engine::synapse_value(index, "gsyn", gsyn); //update gsyn
+    engine::synapse_value(index, "gsyn", gsyn); //update gsyn*/
 
     double T = 1.0/(1.0 + exp(- (v - vthresh)/sig));
    

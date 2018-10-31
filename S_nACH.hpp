@@ -30,15 +30,10 @@ class S_nACH: public Synapse {
   void ode_set(state_type& variables, state_type& dxdt, const double t, unsigned index) {
     
     
-
-    double F = 1; 
-    double F_i = 1;
-    double t_i = 0;
-
     unsigned g1_index = engine::synapse_index(index, "g1");
     double g1 = variables[g1_index];
 
-    double gsyn = engine::synapse_value(index, "gsyn");
+   // double gsyn = engine::synapse_value(index, "gsyn");
 
 
     /*unsigned gsyn_index = engine::synapse_index(index, "gsyn");
@@ -54,22 +49,22 @@ class S_nACH: public Synapse {
     double A = 0.5;
     double t_max = 0.3;
 
-    double tau = 10;
-    double dF = 0.025;
+    //double tau = 10;
+    //double dF = 0.025;
 
-    //Facilitation 
+   /* //Facilitation 
     if (t == t_0) 
     {
-    //double F_i = F;
-    //double t_i = t;
-    engine::synapse_value(index, "F_i", F);
-    engine::synapse_value(index, "t_i", t);
+    F_i = F;
+    t_i = t;
+   // engine::synapse_value(index, "F_i", F);
+   // engine::synapse_value(index, "t_i", t);
     }
     
     F = 1 + (F_i + dF -1)*exp(-(t-t_i)/tau);
     gsyn *= F; 
 
-    engine::synapse_value(index, "gsyn", gsyn); //update gsyn
+    engine::synapse_value(index, "gsyn", gsyn); //update gsyn*/
 
 
     // Variables (T)

@@ -22,14 +22,12 @@ class PN : public Neuron {
 
     std::vector<unsigned> g1_indices;
     std::vector<double> gsyn_values;
-    std::vector<unsigned> gsyn_indices;
     std::vector<double> esyn_values;
     
     std::vector<unsigned> g2_indices;
     std::vector<unsigned> g3_indices;
     std::vector<double> ek_values;
     std::vector<double> gsyn_slow_values;
-    std::vector<unsigned> gsyn_slow_indices;
     
 
     std::vector<double> I_IExt;
@@ -48,14 +46,11 @@ class PN : public Neuron {
     // incoming synaptic currents
     double I_syn = 0;
     g1_indices = engine::get_pre_neuron_indices(index, "g1");
-    
-   // gsyn_indices = engine::get_pre_neuron_indices(index, "gsyn");
     gsyn_values = engine::get_pre_neuron_values(index, "gsyn");
     esyn_values = engine::get_pre_neuron_values(index, "esyn");
     
     for(unsigned iterator = 0; iterator < g1_indices.size(); ++iterator) {
       I_syn += variables[g1_indices[iterator]] * gsyn_values[iterator] * (v - esyn_values[iterator]);
-      //  I_syn += variables[g1_indices[iterator]] * gsyn_indices[iterator] * (v - esyn_values[iterator]);
     }
 
    // std::cout << "g1_indices_size" << index <<" : " << g1_indices.size()<< std::endl;
@@ -66,16 +61,14 @@ class PN : public Neuron {
 
      //Incoming Synaptic slow GABA current 
     double I_GABA = 0;
-    //F_slow = engine::get_pre_neuron_indices(index, "F_slow");
+    
     g2_indices = engine::get_pre_neuron_indices(index, "g2");
     g3_indices = engine::get_pre_neuron_indices(index, "g3");
-    //gsyn_slow_indices = engine::get_pre_neuron_indices(index, "gsyn_slow");
     gsyn_slow_values = engine::get_pre_neuron_values(index, "gsyn_slow");
     ek_values = engine::get_pre_neuron_values(index, "ek");
     
     for(unsigned iterator = 0; iterator < g2_indices.size(); ++iterator) {
       I_GABA += pow(variables[g2_indices[iterator]],4)/(pow(variables[g2_indices[iterator]],4) + 100) * gsyn_slow_values[iterator] * (v - ek_values[iterator]);
-      // I_GABA += pow(variables[g2_indices[iterator]],4)/(pow(variables[g2_indices[iterator]],4) + 100) * gsyn_slow_indices[iterator] * (v - ek_values[iterator]);
     }
  
     engine::neuron_value(index, "I_GABA", I_GABA);

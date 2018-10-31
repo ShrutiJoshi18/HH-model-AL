@@ -12,9 +12,6 @@ class S_slowGABA: public Synapse {
   void ode_set(state_type& variables, state_type& dxdt, const double t, unsigned index) {
     
    
-    double F_slow = 1; 
-    double F_i_slow = 1;
-    double t_i_slow = 0;
 
     unsigned g2_index = engine::synapse_index(index, "g2"); // obtain initial value for g2 from ssets.
     unsigned g3_index = engine::synapse_index(index, "g3"); // obtain initial value for g3 from ssets.
@@ -26,12 +23,12 @@ class S_slowGABA: public Synapse {
     /*unsigned gsyn_slow_index = engine::synapse_index(index, "gsyn_slow"); //initial values for gsyn from ssets.
     double gsyn_slow = variables[gsyn_slow_index];*/
 
-    double gsyn_slow = engine::synapse_value(index, "gsyn_slow");
+   //double gsyn_slow = engine::synapse_value(index, "gsyn_slow");
 
     double g2 = variables[g2_index];
     double g3 = variables[g3_index];
     double v = variables[v_index];
-    double t_0 = engine::neuron_value(pre_neuron_index, "last_spike");
+    //double t_0 = engine::neuron_value(pre_neuron_index, "last_spike");
 
 
     //Constants
@@ -41,20 +38,23 @@ class S_slowGABA: public Synapse {
     double r4 = 0.0033;
     double vthresh = -20.0;
     double sig  = 1.5;
-    double tau = 10;
-    double dF = 0.005;
+    //double tau = 10;
+    //double dF = 0.005;
 
-    //Facilitation 
+   /*//Facilitation 
     if (t == t_0) 
     {
-    engine::synapse_value(index, "F_i_slow",F_slow);
-    engine::synapse_value(index, "t_i_slow",t);
+
+        F_i_slow = F_slow;
+        t_i_slow = t;
+    //engine::synapse_value(index, "F_i_slow",F_slow);
+    //engine::synapse_value(index, "t_i_slow",t);
     }
 
-    F_slow = 1 + (F_i_slow + dF -1)*exp(-(t-t_i_slow)/tau);
+    F_slow = 1 + (F_i_slow + dF -1)*exp(-(t - t_i_slow)/tau);
     gsyn_slow *= F_slow; 
 
-    engine::neuron_value(index, "gsyn_slow", gsyn_slow); //update gsyn
+    engine::neuron_value(index, "gsyn_slow", gsyn_slow); //update gsyn*/
 
 
     double T = 1.0/(1.0 + exp(- (v - vthresh)/sig));
