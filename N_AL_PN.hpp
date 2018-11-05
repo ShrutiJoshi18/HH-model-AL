@@ -12,7 +12,10 @@
 #include "S_nACH.hpp"
 #include "S_2GABAA.hpp"
 #include "S_slowGABA.hpp"
+//#include "batheliersynapsefacilitate.hpp"
 #include <random>
+
+#include <iostream>
 
 namespace insilico {
 
@@ -28,7 +31,9 @@ class PN : public Neuron {
     std::vector<unsigned> g3_indices;
     std::vector<double> ek_values;
     std::vector<double> gsyn_slow_values;
-    
+    std::vector<unsigned> p_indices; // Facilitation variable
+   // std::vector<unsigned> p_slow_indices;
+ 
 
     std::vector<double> I_IExt;
 
@@ -43,14 +48,19 @@ class PN : public Neuron {
       current = I_IExt[0];
     }
 
+    
+
     // incoming synaptic currents
     double I_syn = 0;
     g1_indices = engine::get_pre_neuron_indices(index, "g1");
+    p_indices = engine::get_pre_neuron_indices(index,"p");
     gsyn_values = engine::get_pre_neuron_values(index, "gsyn");
     esyn_values = engine::get_pre_neuron_values(index, "esyn");
     
+    
     for(unsigned iterator = 0; iterator < g1_indices.size(); ++iterator) {
-      I_syn += variables[g1_indices[iterator]] * gsyn_values[iterator] * (v - esyn_values[iterator]);
+     // std::cout << p_indices[iterator];
+    I_syn += variables[g1_indices[iterator]] * gsyn_values[iterator] * variables[p_indices[iterator]] * (v - esyn_values[iterator]);
     }
 
    // std::cout << "g1_indices_size" << index <<" : " << g1_indices.size()<< std::endl;
@@ -64,13 +74,13 @@ class PN : public Neuron {
     
     g2_indices = engine::get_pre_neuron_indices(index, "g2");
     g3_indices = engine::get_pre_neuron_indices(index, "g3");
+    //p_slow_indices = engine::get_pre_neuron_indices(index,"p_slow");
     gsyn_slow_values = engine::get_pre_neuron_values(index, "gsyn_slow");
     ek_values = engine::get_pre_neuron_values(index, "ek");
     
     for(unsigned iterator = 0; iterator < g2_indices.size(); ++iterator) {
-      I_GABA += pow(variables[g2_indices[iterator]],4)/(pow(variables[g2_indices[iterator]],4) + 100) * gsyn_slow_values[iterator] * (v - ek_values[iterator]);
+     I_GABA += pow(variables[g2_indices[iterator]],4)/(pow(variables[g2_indices[iterator]],4) + 100) * gsyn_slow_values[iterator] * variables[p_indices[iterator]] * (v - ek_values[iterator]); 
     }
- 
     engine::neuron_value(index, "I_GABA", I_GABA);
 
 
@@ -102,8 +112,8 @@ class PN : public Neuron {
     dxdt[v_index] = I_ext + current - I_Na - I_K - I_A - I_l - I_kl - I_syn - I_GABA;
 
   } // function ode_set
-}; // class N_AL_PN_HH
 
+}; // class N_AL_PN_HH
 } // insilico
 
 #endif

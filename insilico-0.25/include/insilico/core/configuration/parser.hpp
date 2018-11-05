@@ -90,6 +90,7 @@ void read(const std::string neuron_file, const std::string synapse_file="") {
               ++ncount;
               --dxdt_count;
             }
+            //std::cout << key << " " << ncount << std::endl;
             // universal value map
             engine::value_map[key] = second_item;
           }
@@ -135,6 +136,7 @@ void read(const std::string neuron_file, const std::string synapse_file="") {
               engine::index_map[key] = ncount;
               ++ncount;
               --dxdt_count;
+
             }
             // universal value map
             engine::value_map[key] = second_item;

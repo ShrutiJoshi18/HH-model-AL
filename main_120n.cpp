@@ -3,6 +3,9 @@
 
 #include "N_AL_PN.hpp"
 #include "N_AL_LN.hpp"
+#include "S_nACH.hpp"
+#include "S_2GABAA.hpp"
+#include "S_slowGABA.hpp"
 
 #include <boost/numeric/odeint.hpp>
 #include <fstream>
@@ -31,13 +34,13 @@ int main(int argc, char **argv) {
   engine::generate_neuron<LN>(30);
 
   // Generate 1 S_nACH synapse between our neurons
-  engine::generate_synapse<S_nACH>(1399);
+  engine::generate_synapse<S_nACH>(1332);
 
   // Generate 1 S_2GABAA synapse between our neurons
-  engine::generate_synapse<S_2GABAA>(1797);
+  engine::generate_synapse<S_2GABAA>(1728);
   
   // Generate 1 S_slowGABA synapse between our neurons
-  engine::generate_synapse<S_slowGABA>(1343);
+  engine::generate_synapse<S_slowGABA>(1297);
  
   typedef numeric::odeint::runge_kutta4<
                       state_type , double ,
@@ -53,7 +56,7 @@ int main(int argc, char **argv) {
    integrate_const(elr(), engine::driver(), variables,
    0.0, 3000.0, 0.01, configuration::observer());
   configuration::finalize();
-}
+ }
 
 
 //#include "insilico/neuron/helper/spike_list.hpp"

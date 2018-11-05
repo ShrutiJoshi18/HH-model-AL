@@ -3,6 +3,8 @@
 #ifndef INCLUDED_N_AL_LN_HH_HPP
 #define INCLUDED_N_AL_LN_HH_HPP
 
+#include <iostream>
+
 #include "insilico/core/engine.hpp"
 #include "insilico/neuron/helper/spike_list.hpp"
 #include "insilico/core/injector.hpp"
@@ -16,6 +18,7 @@
 #include "S_2GABAA.hpp"
 #include "S_slowGABA.hpp"
 #include "S_nACH.hpp"
+//#include "batheliersynapsefacilitate.hpp"
 
 #include <random>
 #include <vector>
@@ -28,14 +31,13 @@ class LN : public Neuron {
 
     std::vector<unsigned> g1_indices;
     std::vector<double> gsyn_values;
-    std::vector<unsigned> gsyn_indices;
     std::vector<double> esyn_values;
 
     std::vector<unsigned> g2_indices;
     std::vector<unsigned> g3_indices;
     std::vector<double> ek_values;
     std::vector<double> gsyn_slow_values;
-    std::vector<unsigned> gsyn_slow_indices;
+    std::vector<unsigned> p_indices; // Facilitation variable
     /*
     std::vector<unsigned> g2_indices;
     std::vector<double> gsyn2_values;
@@ -49,15 +51,15 @@ class LN : public Neuron {
 
     // incoming synaptic currents
     double I_syn = 0;
-
+    p_indices = engine::get_pre_neuron_indices(index,"p");
     g1_indices = engine::get_pre_neuron_indices(index, "g1");
-    //gsyn_indices = engine::get_pre_neuron_indices(index, "gsyn");
     gsyn_values = engine::get_pre_neuron_values(index, "gsyn");
     esyn_values = engine::get_pre_neuron_values(index, "esyn");
     
+
     for(unsigned iterator = 0; iterator < g1_indices.size(); ++iterator) {
-      I_syn += variables[g1_indices[iterator]] * gsyn_values[iterator] * (v - esyn_values[iterator]);
-      //  I_syn += variables[g1_indices[iterator]] * gsyn_indices[iterator] * (v - esyn_values[iterator]);
+    // std::cout << p_indices[iterator];
+      I_syn += variables[g1_indices[iterator]] * gsyn_values[iterator] * variables[p_indices[iterator]] * (v - esyn_values[iterator]);
     }
 
    // std::cout << "g1_indices_size" << index <<" : " << g1_indices.size()<< std::endl;
@@ -72,19 +74,26 @@ class LN : public Neuron {
    // F_slow = engine::get_pre_neuron_indices(index, "F_slow");
     g2_indices = engine::get_pre_neuron_indices(index, "g2");
     g3_indices = engine::get_pre_neuron_indices(index, "g3");
-    //gsyn_slow_indices = engine::get_pre_neuron_indices(index, "gsyn_slow");
+   // p_slow_indices = engine::get_pre_neuron_indices(index,"p_slow");
     gsyn_slow_values = engine::get_pre_neuron_values(index, "gsyn_slow");
     ek_values = engine::get_pre_neuron_values(index, "ek");
     
     for(unsigned iterator = 0; iterator < g2_indices.size(); ++iterator) {
-      I_GABA += pow(variables[g2_indices[iterator]],4)/(pow(variables[g2_indices[iterator]],4) + 100) * gsyn_slow_values[iterator] * (v - ek_values[iterator]);
-    //   I_GABA += pow(variables[g2_indices[iterator]],4)/(pow(variables[g2_indices[iterator]],4) + 100) * gsyn_slow_indices[iterator] * (v - ek_values[iterator]);
+    I_GABA += pow(variables[g2_indices[iterator]],4)/(pow(variables[g2_indices[iterator]],4) + 100) * gsyn_slow_values[iterator] * variables[p_indices[iterator]] * (v - ek_values[iterator]);
     }
  
     engine::neuron_value(index, "I_GABA", I_GABA);
 
 
 
+  /*  // note the spike
+    double last_spiked = engine::neuron_value(index, "last_spike");
+    double spike_duration = 3;
+    double v_thresh = -20;
+    if((v > v_thresh) && (t - last_spiked) > spike_duration){
+      engine::neuron_value(index, "last_spike", t);
+    }
+*/
 
     //Adding the external current
     I_Ext = injector::external_current(index, t);

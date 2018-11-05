@@ -18,7 +18,7 @@ class GABA1 : public Synapse {
 	
    
 
-  double factor= engine::synapse_value(index,"factor");
+  //double factor= engine::synapse_value(index,"factor");
   double p0=engine::synapse_value(index,"p0");
   double deltap=engine::synapse_value(index,"deltap");
   double maxp=engine::synapse_value(index,"maxp");
@@ -30,19 +30,19 @@ class GABA1 : public Synapse {
     
   double delay = engine::synapse_value(index, "delay");
    
-  int g1_index = engine::synapse_index(index,"g1");
-  int g2_index = engine::synapse_index(index,"g2");
+  //int g1_index = engine::synapse_index(index,"g1");
+  //int g2_index = engine::synapse_index(index,"g2");
 	int p_index=engine::synapse_index(index,"p");
 
-  double g1 = variables[g1_index];
-  double g2 = variables[g2_index];
+ // double g1 = variables[g1_index];
+ // double g2 = variables[g2_index];
 	double p=variables[p_index];
   double spikecount;
   int pre_neuron_index = engine::synapse_value(index, "pre");
   double last_spiked = engine::neuron_value(pre_neuron_index, "last_spike");
    
-  double tau1 = engine::synapse_value(index, "taurise");
-  double tau2 = engine::synapse_value(index, "taudecay");
+//  double tau1 = engine::synapse_value(index, "taurise");
+ // double tau2 = engine::synapse_value(index, "taudecay");
 
     //std::cout<<"time,"<<t<<"\n";
     
@@ -65,8 +65,8 @@ class GABA1 : public Synapse {
    
     
   // ODE set
-    dxdt[g1_index] = g2;
-    dxdt[g2_index] = (factor * xtg * (tau1*tau2) - g1 - (tau1+tau2) * g2) / (tau1*tau2);
+   // dxdt[g1_index] = g2;
+   // dxdt[g2_index] = (factor * xtg * (tau1*tau2) - g1 - (tau1+tau2) * g2) / (tau1*tau2);
     dxdt[p_index]=-((p-p0)/tauf)+(deltap*(maxp-p)*spikecount);
   
 }

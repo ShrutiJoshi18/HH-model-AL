@@ -8,9 +8,25 @@
     "gsyn_LNLN_fast" : 0.1,
     "gsyn_LNPN_slow" : 0.015,
     
-     "dF_nACH" : 0.025, 
-    "dF_fGABA" : 0.15,   
-    "dF_sGABA" : 0.005,
+    "delay" : 0,
+    
+    "p0_nACH" : 0.1 ,
+    "deltap_nACH" : 0.15,
+    "maxp_nACH" : 1,
+    "tauf_nACH" : 15000,
+    "p_nACH" : 0.1 ,
+    
+    "p0_fGABA" : 0.1,
+    "deltap_fGABA" : 0.15,
+    "maxp_fGABA" : 1,
+    "tauf_fGABA" : 15000,
+    "p_fGABA" : 0.1,
+    
+    "p0_sGABA" : 0.1,
+    "deltap_sGABA" : 0.15,
+    "maxp_sGABA" : 1,
+    "tauf_sGABA" : 15000,
+    "p_sGABA" : 0.1,
     
     "gsyn_PNLN_paper" : 0.35,
     "gsyn_LNPN_fast_paper" : 0.8,
