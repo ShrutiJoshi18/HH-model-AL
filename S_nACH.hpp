@@ -143,6 +143,8 @@ class S_nACH: public Synapse {
     if ((t-last_spiked-delay) > 0 && (t-last_spiked-delay) < 0.027)
     {
         spikecount=1;
+      // std::cout << spikecount << "nACH";
+         //std::cout << p ; 
        
     }
     else
@@ -155,8 +157,10 @@ class S_nACH: public Synapse {
   // ODE set
    // dxdt[g1_index] = g2;
    // dxdt[g2_index] = (factor * xtg * (tau1*tau2) - g1 - (tau1+tau2) * g2) / (tau1*tau2);
-    dxdt[p_index] = -((p-p0)/tauf)+(deltap*(maxp-p)*spikecount);
+   dxdt[p_index] = -((p-p0)/tauf)+(deltap*(maxp-p)*spikecount);
+
      engine::synapse_value(index, "p", p);
+
 
 
   } // function ode_set

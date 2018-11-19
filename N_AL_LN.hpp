@@ -86,14 +86,14 @@ class LN : public Neuron {
 
 
 
-  /*  // note the spike
+ //note the spike
     double last_spiked = engine::neuron_value(index, "last_spike");
-    double spike_duration = 3;
+    double spike_duration = 5;
     double v_thresh = -20;
     if((v > v_thresh) && (t - last_spiked) > spike_duration){
       engine::neuron_value(index, "last_spike", t);
     }
-*/
+
 
     //Adding the external current
     I_Ext = injector::external_current(index, t);

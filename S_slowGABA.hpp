@@ -114,6 +114,7 @@ class S_slowGABA: public Synapse {
     if ((t-last_spiked-delay) > 0 && (t-last_spiked-delay) < 0.027)
     {
         spikecount=1;
+    //   std::cout << spikecount << "sGABA";
        
     }
     else

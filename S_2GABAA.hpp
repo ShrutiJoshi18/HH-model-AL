@@ -98,7 +98,7 @@ class S_2GABAA: public Synapse {
  unsigned p_index = engine::synapse_index(index, "p");
 
   //double factor= engine::synapse_value(index,"factor");
- 
+
   double p0 = engine::synapse_value(index,"p0");
   double deltap = engine::synapse_value(index,"deltap");
   double maxp = engine::synapse_value(index,"maxp");
@@ -136,6 +136,7 @@ class S_2GABAA: public Synapse {
     if ((t-last_spiked-delay) > 0 && (t-last_spiked-delay) < 0.027)
     {
         spikecount=1;
+  //     std::cout << spikecount << "fGABA";
        
     }
     else
